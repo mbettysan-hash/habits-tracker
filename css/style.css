@@ -153,3 +153,56 @@ body {
         transform: rotate(360deg);
     }
 }
+
+/* ==========================================
+   SOL CON ANIMACIÓN DE LLAMARADAS (MENÚ)
+   ========================================== */
+.sun-container {
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 320px;
+    height: 320px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.sun {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #ffea00 0%, #ff9100 70%, #ff6d00 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 50px #ff9100, 0 0 100px rgba(255, 145, 0, 0.6);
+    animation: sunPulse 4s ease-in-out infinite alternate;
+}
+
+/* Resplandor / Llamaradas solares */
+.sun::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    background: radial-gradient(circle, rgba(255, 234, 0, 0.4) 0%, rgba(255, 109, 0, 0) 70%);
+    border-radius: 50%;
+    animation: flareRotate 12s linear infinite;
+    z-index: -1;
+}
+
+@keyframes sunPulse {
+    0% {
+        transform: scale(0.98);
+        box-shadow: 0 0 40px #ff9100, 0 0 80px rgba(255, 145, 0, 0.5);
+    }
+    100% {
+        transform: scale(1.03);
+        box-shadow: 0 0 70px #ffea00, 0 0 130px rgba(255, 145, 0, 0.8);
+    }
+}
+
+@keyframes flareRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
