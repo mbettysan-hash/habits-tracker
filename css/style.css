@@ -1,0 +1,155 @@
+/* ==========================================
+   CONFIGURACIÓN GLOBAL Y TIPOGRAFÍA
+   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+
+:root {
+    --font-game: 'Fredoka', sans-serif;
+    --color-bg: #f0f4f8;
+    --color-card: #ffffff;
+    --color-primary: #ffcc00; /* Dorado brillante (estilo recompensa/oro) */
+    --color-accent: #ff5722;  /* Naranja fuego (para rachas y energía) */
+    --color-success: #2ec4b6; /* Verde menta (hábitos completados) */
+    --color-dark: #2b2d42;    /* Texto principal y bordes oscuros */
+}
+
+body {
+    font-family: var(--font-game);
+    background-color: var(--color-bg);
+    color: var(--color-dark);
+}
+
+/* ==========================================
+   COMPONENTES ESTILO "JUEGO / ARCADE"
+   ========================================== */
+
+/* Tarjetas con bordes definidos y sombra de bloque */
+.game-card {
+    background-color: var(--color-card);
+    border: 3px solid var(--color-dark);
+    border-radius: 16px;
+    box-shadow: 0 6px 0 var(--color-dark);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 0 var(--color-dark);
+}
+
+/* Botones principales con efecto mecánico / 3D */
+.btn-game {
+    background-color: var(--color-primary);
+    border: 3px solid var(--color-dark);
+    border-radius: 12px;
+    font-weight: 600;
+    color: var(--color-dark);
+    box-shadow: 0 4px 0 var(--color-dark);
+    transition: all 0.08s ease;
+}
+
+.btn-game:hover {
+    background-color: #ffd633;
+    color: var(--color-dark);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--color-dark);
+}
+
+.btn-game:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--color-dark);
+}
+
+/* Insignias o etiquetas de categoría */
+.game-badge {
+    background-color: var(--color-accent);
+    color: #ffffff;
+    font-weight: 600;
+    border: 2px solid var(--color-dark);
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+/* Contenedor del mundo en la parte inferior */
+.planet-container {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+/* ==========================================
+   PLANETA TIERRA Y CONTINENTES (INDEX)
+   ========================================== */
+
+/* Contenedor del mundo en la parte inferior */
+.planet-container {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+/* Planeta Tierra con efecto de curvatura */
+.planet {
+    position: absolute;
+    bottom: -420px; /* Oculta la mitad inferior para formar la curvatura */
+    width: 750px;
+    height: 750px;
+    background: radial-gradient(circle at 35% 35%, #4a90e2, #1d4ed8 75%);
+    border-radius: 50%;
+    border: 6px solid var(--color-dark);
+    box-shadow: inset -20px -20px 40px rgba(0, 0, 0, 0.35), 0 0 25px rgba(74, 144, 226, 0.4);
+    /* Animación de rotación continua */
+    animation: rotatePlanet 50s linear infinite;
+}
+
+/* --- Cúmulos Verdes / Continentes principales --- */
+.planet::before {
+    content: '';
+    position: absolute;
+    top: 12%;
+    left: 18%;
+    width: 180px;
+    height: 110px;
+    background: #41b3a3;
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    opacity: 0.9;
+    /* Múltiples masas verdes repartidas por el planeta usando box-shadow */
+    box-shadow: 
+        280px 80px 0 -10px #41b3a3,   /* América del Norte / Asia */
+        380px 320px 0 10px #41b3a3,   /* Oceanía / Isla grande */
+        100px 400px 0 -5px #36b37e,   /* América del Sur */
+        -40px 250px 0 -15px #41b3a3;  /* África / Europa */
+}
+
+/* --- Cúmulos Verdes / Islas y detalles secundarios --- */
+.planet::after {
+    content: '';
+    position: absolute;
+    bottom: 22%;
+    right: 22%;
+    width: 140px;
+    height: 90px;
+    background: #36b37e;
+    border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%;
+    opacity: 0.85;
+    /* Islas pequeñas distribuidas */
+    box-shadow: 
+        -200px -250px 0 -25px #36b37e,
+        -320px -100px 0 -30px #41b3a3,
+        120px -180px 0 -20px #36b37e;
+}
+
+@keyframes rotatePlanet {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
