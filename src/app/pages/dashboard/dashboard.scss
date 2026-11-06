@@ -1,0 +1,705 @@
+
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+
+  h1 {
+    margin: 7px 0;
+    font-size: 32px;
+    font-weight: 900;
+  }
+
+  p {
+    margin: 0;
+    color: #888;
+    font-size: 14px;
+  }
+}
+
+.section-eyebrow {
+  color: #b39acb;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+}
+
+.intro-decoration {
+  width: 75px;
+  height: 75px;
+  display: grid;
+  place-items: center;
+  border-radius: 25px;
+  background: #f0eafa;
+  color: #9276ae;
+  font-size: 35px;
+  transform: rotate(8deg);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 42px;
+}
+
+.summary-card {
+  min-height: 175px;
+  padding: 22px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+
+  > span {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  > strong {
+    font-size: 30px;
+    font-weight: 900;
+  }
+
+  > small {
+    color: #777;
+    font-size: 11px;
+  }
+}
+
+.missions-card {
+  background: #fff0e9;
+}
+
+.habits-card {
+  background: #eaf5ed;
+}
+
+.progress-card {
+  background: #f0eafa;
+}
+
+.card-icon {
+  font-size: 22px;
+}
+
+.missions-card .card-icon {
+  color: #e77f67;
+}
+
+.habits-card .card-icon {
+  color: #6da780;
+}
+
+.progress-card .card-icon {
+  color: #9276ae;
+}
+
+.missions-section,
+.habits-section {
+  margin-bottom: 40px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+
+  h2 {
+    margin: 0;
+    font-size: 21px;
+    font-weight: 900;
+  }
+
+  p {
+    margin: 5px 0 0;
+    color: #999;
+    font-size: 12px;
+  }
+}
+
+.create-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 17px;
+  border: none;
+  border-radius: 12px;
+  background: var(--orbita-coral);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px #ff806b40;
+  }
+}
+
+.empty-state {
+  min-height: 210px;
+  padding: 30px;
+  border: 1px dashed #e8ded5;
+  border-radius: 20px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  h3 {
+    margin: 13px 0 5px;
+    font-size: 16px;
+    font-weight: 900;
+  }
+
+  p {
+    margin: 0;
+    color: #999;
+    font-size: 12px;
+  }
+}
+
+.empty-icon {
+  width: 55px;
+  height: 55px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: #fff4e7;
+  color: #d7a44d;
+  font-size: 25px;
+}
+
+.habits-empty .empty-icon {
+  background: #eef6f0;
+  color: #78a889;
+}
+
+@media (max-width: 900px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 550px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-intro h1 {
+    font-size: 25px;
+  }
+
+  .intro-decoration {
+    width: 55px;
+    height: 55px;
+    font-size: 25px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
+.missions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.mission-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  background: #fff;
+  border: 1px solid #f0eae4;
+  border-radius: 19px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px #2020200d;
+  }
+}
+
+.mission-color {
+  width: 7px;
+  flex-shrink: 0;
+}
+
+.mission-content {
+  flex: 1;
+  min-width: 0;
+  padding: 20px;
+}
+
+.mission-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.mission-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  font-size: 19px;
+}
+
+.mission-status {
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #f7f4f1;
+  color: #888;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.mission-content h3 {
+  margin: 17px 0 5px;
+  font-size: 17px;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.mission-description {
+  min-height: 18px;
+  margin: 0;
+  color: #999;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.mission-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+  padding-top: 13px;
+  border-top: 1px solid #f2eee9;
+
+  span {
+    color: #888;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  i {
+    margin-right: 4px;
+    color: #b39acb;
+  }
+}
+
+.empty-create-button {
+  margin-top: 18px;
+  padding: 11px 17px;
+  border: none;
+  border-radius: 12px;
+  background: var(--orbita-coral);
+  color: white;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 900px) {
+  .missions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ==========================================
+   HÁBITOS DENTRO DE LAS MISIONES
+========================================== */
+
+.add-habit-button {
+  width: 100%;
+  min-height: 39px;
+  margin-top: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px dashed var(--orbita-coral);
+  border-radius: 11px;
+  background: #fff7f4;
+  color: #ed765f;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--orbita-coral);
+    color: #fff;
+    border-style: solid;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(255, 128, 107, 0.18);
+  }
+
+  &:disabled {
+    border-color: #e8e5e1;
+    background: #f7f5f3;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+}
+
+.mission-habits {
+  margin-top: 21px;
+  padding-top: 17px;
+  border-top: 1px solid #f1ece7;
+}
+
+.habits-heading {
+  display: block;
+  margin-bottom: 12px;
+  color: #aaa;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+}
+
+.mission-habit {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 10px;
+  margin-bottom: 7px;
+  border: 1px solid #f3efeb;
+  border-radius: 12px;
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    transform: translateX(3px);
+    box-shadow: 0 4px 12px rgba(32, 32, 32, 0.04);
+  }
+
+  > span {
+    flex: 1;
+    min-width: 0;
+    color: #444;
+    font-size: 12px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+  }
+}
+
+.habit-emoji {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 18px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.55);
+}
+
+.habit-indicator {
+  color: #d8d1ca;
+  font-size: 11px;
+}
+
+.no-habits {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 11px;
+  background: #fffbf7;
+  color: #aaa;
+  font-size: 11px;
+  font-weight: 600;
+
+  i {
+    color: var(--orbita-purple);
+  }
+}
+
+/* ==========================================
+   VISTA GENERAL DE HÁBITOS
+========================================== */
+
+.habits-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.habit-overview-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid #f0eae4;
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(32, 32, 32, 0.025);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 20px rgba(32, 32, 32, 0.07);
+  }
+}
+
+.habit-overview-emoji {
+  width: 53px;
+  height: 53px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(32, 32, 32, 0.08);
+  font-size: 26px;
+}
+
+.habit-overview-info {
+  min-width: 0;
+
+  h3 {
+    margin: 0 0 4px;
+    color: var(--orbita-dark);
+    font-size: 13px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+  }
+
+  span {
+    display: block;
+    color: #aaa;
+    font-size: 10px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 576px) {
+  .habits-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .mission-habit {
+    padding: 8px;
+  }
+}
+
+
+/* ==========================================
+   SEGUIMIENTO SEMANAL DE HÁBITOS
+========================================== */
+
+.mission-habit {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #f0eae4;
+  border-radius: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: #e5dcd3;
+    box-shadow: 0 4px 12px #20202008;
+  }
+}
+
+.habit-main {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.habit-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--orbita-dark);
+  overflow-wrap: anywhere;
+}
+
+.habit-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 7px;
+  padding-top: 11px;
+  border-top: 1px solid #f2eee9;
+}
+
+.week-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 7px 2px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: #faf8f5;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease,
+              transform 0.2s ease;
+
+  &:hover {
+    background: #f2eee9;
+    transform: translateY(-2px);
+  }
+
+  &.today {
+    border-color: var(--orbita-purple);
+    background: #f8f4ff;
+  }
+
+  &.completed {
+    background: #edf8ef;
+    border-color: #c9e8d0;
+
+    .day-indicator {
+      background: var(--orbita-green);
+      color: #276c3c;
+      border-color: var(--orbita-green);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--orbita-purple);
+    outline-offset: 2px;
+  }
+}
+
+.day-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #888078;
+}
+
+.day-indicator {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 1.5px solid #ded8d0;
+  border-radius: 50%;
+  background: #fff;
+  color: transparent;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+/* ==========================================
+   ADAPTACIÓN PARA DISPOSITIVOS MÓVILES
+========================================== */
+
+@media (max-width: 480px) {
+  .mission-habit {
+    padding: 12px;
+  }
+
+  .habit-week {
+    gap: 4px;
+  }
+
+  .week-day {
+    padding: 7px 1px;
+    gap: 6px;
+  }
+
+  .day-label {
+    font-size: 9px;
+  }
+
+  .day-indicator {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+
+
+/* ==========================================
+   PROGRESO DE LAS MISIONES
+========================================== */
+
+.mission-progress {
+  margin: 18px 0;
+}
+
+.mission-progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+
+  span {
+    color: #888078;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  strong {
+    color: var(--orbita-dark);
+    font-size: 12px;
+    font-weight: 900;
+  }
+}
+
+.mission-progress-track {
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #f0ece7;
+}
+
+.mission-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.4s ease;
+}
+

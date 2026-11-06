@@ -1,0 +1,51 @@
+
+:host {
+  display: block;
+}
+
+.planet-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #f0eae4;
+  border-radius: 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 18px #2020200d;
+  }
+}
+
+.planet-visual {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.planet-emoji {
+  font-size: 30px;
+}
+
+.planet-info {
+  min-width: 0;
+}
+
+.planet-label {
+  color: #aaa;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.planet-info h3 {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  font-weight: 800;
+}

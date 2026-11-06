@@ -1,0 +1,73 @@
+
+:host {
+  display: block;
+}
+
+.rocket-card {
+  padding: 22px;
+  background: #fff;
+  border: 1px solid #f0eae4;
+  border-radius: 20px;
+}
+
+.rocket-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  h3 {
+    margin: 5px 0 0;
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  strong {
+    color: #e77f67;
+    font-size: 23px;
+    font-weight: 900;
+  }
+}
+
+.rocket-label {
+  color: #aaa;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.rocket-track {
+  height: 12px;
+  margin-top: 20px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #f2eee9;
+}
+
+.rocket-progress {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ff806b, #ffd166);
+  transition: width 0.4s ease;
+}
+
+.rocket-footer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 15px;
+
+  span {
+    font-size: 19px;
+  }
+
+  small {
+    flex: 1;
+    color: #999;
+    font-size: 10px;
+  }
+
+  i {
+    color: #c9b6e4;
+  }
+}

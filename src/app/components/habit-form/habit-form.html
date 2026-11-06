@@ -1,0 +1,121 @@
+
+<div class="modal-overlay" (click)="onCancel()">
+  <div class="habit-modal" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <div>
+        <span class="eyebrow">NUEVO PLANETA</span>
+        <h2>Crear hábito</h2>
+        <p>Agrega un nuevo hábito a tu universo.</p>
+      </div>
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="onCancel()"
+        aria-label="Cerrar">
+        &times;
+      </button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+
+      <div class="habit-preview">
+        <div
+          class="preview-planet"
+          [style.backgroundColor]="selectedColor">
+          {{ selectedEmoji }}
+        </div>
+
+        <div class="preview-info">
+          <span>VISTA PREVIA</span>
+          <strong>{{ name || 'Nombre de tu hábito' }}</strong>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="habitName">Nombre del hábito</label>
+
+        <input
+          id="habitName"
+          type="text"
+          name="name"
+          [(ngModel)]="name"
+          placeholder="Ej. Leer 20 minutos"
+          maxlength="60"
+          required
+          autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label>Selecciona un emoji</label>
+
+        <div class="emoji-grid">
+          @for (emoji of emojis; track emoji) {
+            <button
+              type="button"
+              class="emoji-option"
+              [class.selected]="selectedEmoji === emoji"
+              (click)="selectedEmoji = emoji">
+              {{ emoji }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Color del planeta</label>
+
+        <div class="color-options">
+          @for (color of colors; track color.value) {
+            <button
+              type="button"
+              class="color-option"
+              [class.selected]="selectedColor === color.value"
+              [style.backgroundColor]="color.value"
+              [attr.aria-label]="color.label"
+              [title]="color.label"
+              (click)="selectedColor = color.value">
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="habitMission">Misión a la que pertenece</label>
+
+        <select
+          id="habitMission"
+          name="missionId"
+          [(ngModel)]="selectedMissionId"
+          required>
+
+          <option value="" disabled>Selecciona una misión</option>
+
+          @for (mission of missions; track mission.id) {
+            <option [value]="mission.id">
+              {{ mission.name }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="modal-actions">
+        <button
+          type="button"
+          class="btn-cancel"
+          (click)="onCancel()">
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          class="btn-save"
+          [disabled]="!name.trim() || !selectedMissionId">
+          Crear hábito
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

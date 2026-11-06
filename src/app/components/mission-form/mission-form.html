@@ -1,0 +1,113 @@
+
+<div class="modal-overlay" (click)="onCancel()">
+
+  <section
+    class="mission-modal"
+    (click)="$event.stopPropagation()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="mission-title">
+
+    <div class="modal-header">
+      <div>
+        <span class="modal-eyebrow">NUEVA AVENTURA</span>
+        <h2 id="mission-title">Crear misión</h2>
+        <p>Define un objetivo para comenzar tu viaje.</p>
+      </div>
+
+      <button
+        type="button"
+        class="close-button"
+        aria-label="Cerrar"
+        (click)="onCancel()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #missionForm="ngForm">
+
+      <div class="form-group">
+        <label for="missionName">Nombre de la misión *</label>
+
+        <input
+          id="missionName"
+          type="text"
+          name="name"
+          [(ngModel)]="name"
+          #missionName="ngModel"
+          placeholder="Ej. Mejorar mi salud"
+          maxlength="60"
+          required
+          autocomplete="off">
+
+        @if (missionName.invalid && missionName.touched) {
+          <small class="error-message">
+            El nombre de la misión es obligatorio.
+          </small>
+        }
+
+        <small class="field-hint">
+          Máximo 60 caracteres.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="missionDescription">Descripción</label>
+
+        <textarea
+          id="missionDescription"
+          name="description"
+          [(ngModel)]="description"
+          placeholder="Describe qué quieres conseguir..."
+          rows="3"
+          maxlength="250">
+        </textarea>
+
+        <small class="field-hint">
+          Opcional. Máximo 250 caracteres.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Color de la misión</label>
+
+        <div class="color-palette">
+          @for (color of colors; track color.value) {
+            <button
+              type="button"
+              class="color-option"
+              [style.backgroundColor]="color.value"
+              [class.selected]="selectedColor === color.value"
+              [attr.aria-label]="color.label"
+              [attr.aria-pressed]="selectedColor === color.value"
+              (click)="selectedColor = color.value">
+              @if (selectedColor === color.value) {
+                <i class="bi bi-check-lg"></i>
+              }
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="onCancel()">
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          class="save-button"
+          [disabled]="missionForm.invalid || !name.trim()">
+          <i class="bi bi-rocket-takeoff"></i>
+          Crear misión
+        </button>
+      </div>
+
+    </form>
+
+  </section>
+
+</div>

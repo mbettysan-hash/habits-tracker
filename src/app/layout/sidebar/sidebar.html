@@ -1,0 +1,53 @@
+
+<aside class="sidebar">
+
+  <div class="brand">
+    <div class="brand-icon">
+      <i class="bi bi-stars"></i>
+    </div>
+    <span>ÓRBITA</span>
+  </div>
+
+  <div class="menu-section">
+    <span class="menu-label">MENÚ PRINCIPAL</span>
+
+    <nav class="menu">
+
+      <a routerLink="/" routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">
+        <i class="bi bi-house-door"></i>
+        <span>Inicio</span>
+      </a>
+
+      <a routerLink="/" fragment="misiones">
+        <i class="bi bi-rocket-takeoff"></i>
+        <span>Misiones</span>
+      </a>
+
+      <a routerLink="/" fragment="habitos">
+        <i class="bi bi-stars"></i>
+        <span>Hábitos</span>
+      </a>
+<a
+  routerLink="/universo"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="sidebar-link"
+>
+  <i class="bi bi-stars"></i>
+  <span>Explorar universo</span>
+</a>
+
+    </nav>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="planet-decoration">
+      <i class="bi bi-moon-stars"></i>
+    </div>
+    <span>Explora tu universo</span>
+    <small>Cada pequeño paso cuenta.</small>
+  </div>
+
+</aside>
+

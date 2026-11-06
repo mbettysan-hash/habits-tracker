@@ -1,0 +1,345 @@
+<section class="dashboard">
+
+  <div class="dashboard-intro">
+    <div>
+      <span class="section-eyebrow">TU ESPACIO PERSONAL</span>
+      <h1>Tu universo</h1>
+      <p>Organiza tus objetivos y convierte tus hábitos en misiones.</p>
+    </div>
+
+    <div class="intro-decoration">
+      <i class="bi bi-stars"></i>
+    </div>
+  </div>
+
+  <!-- Resumen general -->
+  <div class="summary-grid">
+
+    <article class="summary-card missions-card">
+      <div class="card-icon">
+        <i class="bi bi-rocket-takeoff"></i>
+      </div>
+      <span>Misiones registradas</span>
+      <strong>{{ missions().length }}</strong>
+      <small>Objetivos de tu universo.</small>
+    </article>
+
+    <article class="summary-card habits-card">
+      <div class="card-icon">
+        <i class="bi bi-stars"></i>
+      </div>
+      <span>Hábitos registrados</span>
+      <strong>{{ habits().length }}</strong>
+      <small>Pequeños pasos, grandes cambios.</small>
+    </article>
+
+    <article class="summary-card progress-card">
+      <div class="card-icon">
+        <i class="bi bi-trophy"></i>
+      </div>
+
+      <span>Progreso general</span>
+
+      <strong>{{ getOverallProgress() }}%</strong>
+
+      <small>
+        {{ getOverallProgress() === 100
+          ? '¡Has completado todos tus objetivos!'
+          : 'Cada día te acerca a tu meta.' }}
+      </small>
+    </article>
+
+  </div>
+
+  <!-- Misiones -->
+  <section class="missions-section" id="misiones">
+
+    <div class="section-heading">
+      <div>
+        <h2>Misiones</h2>
+        <p>Tus objetivos organizados en un solo lugar.</p>
+      </div>
+
+      <button
+        type="button"
+        class="create-button"
+        (click)="openMissionForm()">
+
+        <i class="bi bi-plus-lg"></i>
+        Nueva misión
+
+      </button>
+    </div>
+
+    @if (missions().length > 0) {
+
+      <div class="missions-grid">
+
+        @for (mission of missions(); track mission.id) {
+
+          <article class="mission-card">
+
+            <div
+              class="mission-color"
+              [style.backgroundColor]="mission.color">
+            </div>
+
+            <div class="mission-content">
+
+              <div class="mission-top">
+                <div
+                  class="mission-icon"
+                  [style.backgroundColor]="mission.color">
+                  <i class="bi bi-rocket-takeoff"></i>
+                </div>
+
+                <span class="mission-status">Nueva misión</span>
+              </div>
+
+              <h3>{{ mission.name }}</h3>
+
+              <p class="mission-description">
+                {{ mission.description || 'Sin descripción' }}
+              </p>
+
+              <div class="mission-footer">
+                <span>
+                  <i class="bi bi-stars"></i>
+                  {{ getHabitCount(mission.id) }} / 6 hábitos
+                </span>
+
+                <span class="mission-date">
+                  {{ mission.createdAt | date:'dd/MM/yyyy' }}
+                </span>
+              </div>
+
+              <!-- Progreso de la misión -->
+              <div class="mission-progress">
+
+                <div class="mission-progress-info">
+                  <span>Progreso de la misión</span>
+
+                  <strong>
+                    {{ getMissionProgress(mission.id) }}%
+                  </strong>
+                </div>
+
+                <div class="mission-progress-track">
+                  <div
+                    class="mission-progress-fill"
+                    [style.width.%]="getMissionProgress(mission.id)"
+                    [style.backgroundColor]="mission.color">
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Botón para agregar hábitos -->
+              <button
+                type="button"
+                class="add-habit-button"
+                [disabled]="getHabitCount(mission.id) >= 6"
+                (click)="openHabitForm(mission)">
+
+                @if (getHabitCount(mission.id) >= 6) {
+                  <i class="bi bi-check-circle"></i>
+                  Límite alcanzado
+                } @else {
+                  <i class="bi bi-plus-lg"></i>
+                  Agregar hábito
+                }
+
+              </button>
+
+              <!-- Hábitos pertenecientes a esta misión -->
+              @if (getHabitsByMission(mission.id).length > 0) {
+
+                <div class="mission-habits">
+
+                  <span class="habits-heading">
+                    PLANETAS DE ESTA MISIÓN
+                  </span>
+
+                  @for (habit of getHabitsByMission(mission.id); track habit.id) {
+
+                    <div class="mission-habit">
+
+                      <!-- Información del hábito -->
+                      <div class="habit-main">
+
+                        <div
+                          class="habit-emoji"
+                          [style.backgroundColor]="habit.color">
+                          {{ habit.emoji }}
+                        </div>
+
+                        <span class="habit-name">
+                          {{ habit.name }}
+                        </span>
+
+                        <i class="bi bi-circle habit-indicator"></i>
+
+                      </div>
+
+                      <!-- Seguimiento semanal -->
+                      <div class="habit-week">
+
+                        @for (day of getWeekDays(); track day.dateKey) {
+
+                          <button
+                            type="button"
+                            class="week-day"
+                            [class.completed]="isHabitDayCompleted(habit, day.dateKey)"
+                            [class.today]="day.isToday"
+                            (click)="toggleHabitDay(habit, day.dateKey)"
+                            [title]="day.label + ' - ' + day.dateKey">
+
+                            <span class="day-label">
+                              {{ day.label }}
+                            </span>
+
+                            <span class="day-indicator">
+                              @if (isHabitDayCompleted(habit, day.dateKey)) {
+                                <i class="bi bi-check-lg"></i>
+                              }
+                            </span>
+
+                          </button>
+
+                        }
+
+                      </div>
+
+                    </div>
+
+                  }
+
+                </div>
+
+              } @else {
+
+                <div class="no-habits">
+                  <i class="bi bi-stars"></i>
+                  Todavía no hay hábitos en esta misión.
+                </div>
+
+              }
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+    } @else {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          <i class="bi bi-rocket"></i>
+        </div>
+
+        <h3>Tu universo está esperando</h3>
+
+        <p>
+          Crea tu primera misión y comienza a construir tus hábitos.
+        </p>
+
+        <button
+          type="button"
+          class="empty-create-button"
+          (click)="openMissionForm()">
+
+          <i class="bi bi-plus-lg"></i>
+          Crear primera misión
+
+        </button>
+
+      </div>
+
+    }
+
+  </section>
+
+  <!-- Hábitos -->
+  <section class="habits-section" id="habitos">
+
+    <div class="section-heading">
+      <div>
+        <h2>Mis hábitos</h2>
+        <p>Los pequeños pasos que construyen tu progreso.</p>
+      </div>
+    </div>
+
+    @if (habits().length === 0) {
+
+      <div class="empty-state habits-empty">
+
+        <div class="empty-icon">
+          <i class="bi bi-stars"></i>
+        </div>
+
+        <h3>Aún no tienes hábitos</h3>
+
+        <p>
+          Crea una misión y comienza a agregar tus hábitos.
+        </p>
+
+      </div>
+
+    } @else {
+
+      <div class="habits-overview">
+
+        @for (habit of habits(); track habit.id) {
+
+          <article class="habit-overview-card">
+
+            <div
+              class="habit-overview-emoji"
+              [style.backgroundColor]="habit.color">
+              {{ habit.emoji }}
+            </div>
+
+            <div class="habit-overview-info">
+              <h3>{{ habit.name }}</h3>
+
+              <span>
+                {{ missions().find(m => m.id === habit.missionId)?.name || 'Sin misión' }}
+              </span>
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+    }
+
+  </section>
+
+</section>
+
+<!-- Modal de creación de misión -->
+@if (showMissionForm) {
+
+  <app-mission-form
+    (save)="createMission($event)"
+    (cancel)="closeMissionForm()">
+  </app-mission-form>
+
+}
+
+<!-- Modal de creación de hábito -->
+@if (showHabitForm && selectedMission) {
+
+  <app-habit-form
+    [missions]="[selectedMission]"
+    (save)="createHabit($event)"
+    (cancel)="closeHabitForm()">
+  </app-habit-form>
+
+}

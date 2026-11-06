@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --orbita-bg: #FFFBF7;
+  --orbita-dark: #202020;
+  --orbita-coral: #FF806B;
+  --orbita-yellow: #FFD166;
+  --orbita-green: #A8DDB5;
+  --orbita-purple: #C9B6E4;
+  --orbita-blue: #A9D5ED;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--orbita-bg);
+  color: var(--orbita-dark);
+  font-family: 'Nunito', sans-serif;
+}
+
+button {
+  font-family: inherit;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

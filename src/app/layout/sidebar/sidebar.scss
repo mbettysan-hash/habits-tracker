@@ -1,0 +1,139 @@
+
+:host {
+  display: block;
+  flex-shrink: 0;
+}
+
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  padding: 30px 20px;
+  background: #fff;
+  border-right: 1px solid #f0eae4;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 55px;
+
+  span {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--orbita-purple);
+  font-size: 22px;
+}
+
+.menu-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menu-label {
+  padding-left: 12px;
+  color: #aaa;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    border-radius: 13px;
+    color: #777;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.2s ease;
+
+    i {
+      font-size: 18px;
+    }
+
+    &:hover {
+      background: #faf5ff;
+      color: var(--orbita-dark);
+    }
+
+    &.active {
+      background: #f0eafa;
+      color: #765b91;
+    }
+  }
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 20px 12px;
+  border-radius: 16px;
+  background: #fff7e5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  span {
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  small {
+    color: #888;
+    font-size: 11px;
+  }
+}
+
+.planet-decoration {
+  color: #c59a42;
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 76px;
+    padding: 25px 10px;
+    align-items: center;
+  }
+
+  .brand {
+    margin-bottom: 45px;
+
+    span,
+    .brand-icon + span {
+      display: none;
+    }
+  }
+
+  .menu-label,
+  .menu a span,
+  .sidebar-footer {
+    display: none;
+  }
+
+  .menu a {
+    justify-content: center;
+    padding: 13px;
+  }
+}
