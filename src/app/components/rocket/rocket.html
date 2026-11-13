@@ -1,0 +1,26 @@
+
+<div class="rocket-card">
+
+  <div class="rocket-heading">
+    <div>
+      <span class="rocket-label">ESTADO DE LA MISIÓN</span>
+      <h3>{{ label }}</h3>
+    </div>
+
+    <strong>{{ progress }}%</strong>
+  </div>
+
+  <div class="rocket-track">
+    <div
+      class="rocket-progress"
+      [style.width.%]="progress">
+    </div>
+  </div>
+
+  <div class="rocket-footer">
+    <span>🚀</span>
+    <small>Continúa avanzando en tu universo.</small>
+    <i class="bi bi-stars"></i>
+  </div>
+
+</div>

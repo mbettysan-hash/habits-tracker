@@ -1,0 +1,652 @@
+<section class="universe-page">
+
+  <!-- Encabezado -->
+  <div class="universe-heading">
+    <div>
+      <span class="eyebrow">CENTRO DE EXPLORACIÓN</span>
+      <h1>Mi universo</h1>
+      <p>Explora tus misiones y descubre hasta dónde puedes llegar.</p>
+    </div>
+
+    <div class="universe-status">
+      <span class="status-dot"></span>
+      Universo activo
+    </div>
+  </div>
+
+  <!-- Selector de universo -->
+  <div class="universe-mode-selector">
+
+    <button type="button" [class.active]="universeMode === 'weekly'" (click)="changeUniverseMode('weekly')">
+
+      <i class="bi bi-calendar-week"></i>
+      Universo semanal
+    </button>
+
+    <button type="button" [class.active]="universeMode === 'monthly'" (click)="changeUniverseMode('monthly')">
+
+      <i class="bi bi-calendar-month"></i>
+      Universo mensual
+    </button>
+
+  </div>
+
+  <!-- Información del universo seleccionado -->
+  <div class="universe-mode-info">
+
+    <div class="mode-info-content">
+
+      <div class="mode-info-heading">
+
+        <div class="mode-info-icon">
+          <i class="bi" [class.bi-calendar-week]="universeMode === 'weekly'"
+            [class.bi-calendar-month]="universeMode === 'monthly'">
+          </i>
+        </div>
+
+        <div>
+          <span class="mode-info-eyebrow">
+            CENTRO DE PROGRESO
+          </span>
+
+          <h3>
+            {{ universeMode === 'weekly' ? 'Progreso semanal' : 'Progreso mensual' }}
+          </h3>
+        </div>
+
+      </div>
+
+      <div class="mode-info-progress">
+
+        <div class="mode-info-percentage">
+          <span>Progreso de tu misión</span>
+          <strong>{{ missionProgress }}%</strong>
+        </div>
+
+        <div class="mode-progress-track">
+          <div class="mode-progress-fill" [style.width.%]="missionProgress">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Selector de misiones -->
+  @if (missions().length > 0) {
+
+  <div class="mission-selector">
+
+    <div class="mission-selector-info">
+      <span class="selector-eyebrow">TU RECORRIDO</span>
+
+      <h2>
+        {{ selectedMission?.name }}
+      </h2>
+
+      <p>
+        {{ selectedMission?.description || 'Una nueva aventura está por comenzar.' }}
+      </p>
+    </div>
+
+    <div class="mission-selector-control">
+
+      <label for="missionSelect">Seleccionar misión</label>
+
+      <select id="missionSelect" [value]="selectedMissionId" (change)="selectMission($any($event.target).value)">
+
+        @for (mission of missions(); track mission.id) {
+        <option [value]="mission.id">
+          {{ mission.name }}
+        </option>
+        }
+
+      </select>
+
+      <span class="habit-counter">
+        {{ planets.length }} hábitos en esta misión
+      </span>
+
+    </div>
+
+  </div>
+
+  <!-- Escenario espacial -->
+  <div class="universe-scene" #universeScene [class.positions-ready]="positionsReady"
+    [class.weekly-universe]="universeMode === 'weekly'" [class.monthly-universe]="universeMode === 'monthly'">
+
+    <!-- Fondo espacial -->
+    <div class="nebula nebula-one"></div>
+    <div class="nebula nebula-two"></div>
+    <div class="nebula nebula-three"></div>
+
+    <div class="star-field"></div>
+
+    <!-- Estrellas decorativas -->
+    <div class="twinkle-star star-one"></div>
+    <div class="twinkle-star star-two"></div>
+    <div class="twinkle-star star-three"></div>
+    <div class="twinkle-star star-four"></div>
+    <div class="twinkle-star star-five"></div>
+    <div class="twinkle-star star-six"></div>
+
+    <!-- ================================== -->
+    <!-- RUTA DEL UNIVERSO SEMANAL -->
+    <!-- ================================== -->
+
+    @if (universeMode === 'weekly') {
+
+    <svg class="orbit-paths" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+
+      <path class="main-route-glow" d="M 100 930
+               C 350 930, 650 850, 900 800
+               C 950 780, 950 700, 900 670
+               C 650 620, 350 570, 100 530
+               C 50 510, 50 430, 100 400
+               C 350 360, 650 310, 900 270
+               C 950 250, 950 180, 900 140
+               C 650 100, 350 70, 100 40" />
+
+      <path #mainRoute class="main-route" d="M 100 930
+               C 350 930, 650 850, 900 800
+               C 950 780, 950 700, 900 670
+               C 650 620, 350 570, 100 530
+               C 50 510, 50 430, 100 400
+               C 350 360, 650 310, 900 270
+               C 950 250, 950 180, 900 140
+               C 650 100, 350 70, 100 40" />
+
+      <ellipse cx="180" cy="700" rx="100" ry="45" class="orbit-decoration" />
+
+      <ellipse cx="800" cy="450" rx="110" ry="55" class="orbit-decoration" />
+
+    </svg>
+
+    <!-- Estaciones semanales -->
+    <div class="weekly-stations">
+
+      @for (station of stations; track station.id) {
+
+      <div class="space-station" [class.today]="station.isToday" [class.past]="station.isPast"
+        [class.future]="station.isFuture" [class.selected]="selectedStationId === station.id" [style.left.%]="station.x"
+        [style.top.%]="station.y" role="button" tabindex="0" (click)="selectStation(station.id)"
+        (keydown.enter)="selectStation(station.id)" (keydown.space)="selectStation(station.id); $event.preventDefault()"
+        [attr.aria-label]="'Ver rendimiento de ' + station.label"
+        [attr.aria-pressed]="selectedStationId === station.id">
+
+        <div class="station-structure">
+          <img src="assets/stations/s1.png" alt="Estación espacial" class="station-image" draggable="false" />
+        </div>
+
+        <span class="station-label">
+          {{ station.label }}
+        </span>
+
+        @if (station.isPast) {
+
+        <div class="station-stars">
+
+          @for (star of station.stars; track $index) {
+
+          <span class="station-star" [style.--star-progress.%]="star">
+
+            <i class="bi bi-star-fill"></i>
+
+          </span>
+
+          }
+
+        </div>
+
+        }
+
+        @if (station.isToday) {
+        <span class="station-current-label">
+          Día actual
+        </span>
+        }
+
+      </div>
+
+      }
+
+    </div>
+
+    <!-- Planetas de los hábitos -->
+    @for (planet of dailyPlanets; track planet.id) {
+
+    <button class="planet daily-planet" [class.selected]="selectedPlanet === planet.id"
+      [class.completed]="planet.completed" [class.incomplete]="!planet.completed" [style.left.%]="planet.x"
+      [style.top.%]="planet.y" [style.--planet-color]="planet.color" [style.--planet-size.px]="planet.size"
+      (click)="selectPlanet(planet.id)" [attr.aria-label]="planet.name + ' - Día ' + (planet.dayIndex + 1)">
+
+      <span class="planet-ring"></span>
+
+      <!-- Planeta base -->
+      <img class="planet-image" [src]="'assets/Planets/planet0' + (planet.planetType - 1) + '.png'" [alt]="planet.name"
+        draggable="false" />
+
+      <!-- Esferas aleatorias -->
+      @for (sphere of planet.visualParts?.spheres ?? []; track sphere) {
+
+      <img class="planet-sphere" [src]="'assets/Parts/' + sphere" alt="" draggable="false" />
+
+      }
+
+      <!-- Texturas aleatorias -->
+      @for (noise of planet.visualParts?.noises ?? []; track noise) {
+
+      <img class="planet-noise" [src]="'assets/Parts/' + noise" alt="" draggable="false" />
+
+      }
+
+      <!-- Iluminaciones aleatorias -->
+      @for (light of planet.visualParts?.lights ?? []; track light) {
+
+      <img class="planet-light" [src]="'assets/Parts/' + light" alt="" draggable="false" />
+
+      }
+
+      <span class="planet-glow"></span>
+
+      <span class="planet-name">
+        {{ planet.name }}
+      </span>
+
+    </button>
+
+    }
+
+    <!-- Información de la estación -->
+    @if (selectedStation; as station) {
+
+    <div class="planet-panel station-panel">
+
+      <button class="close-panel" (click)="selectedStationId = null" aria-label="Cerrar información">
+        ×
+      </button>
+
+      <span class="panel-eyebrow">
+        INFORMACIÓN DE LA ESTACIÓN
+      </span>
+
+      <h3>
+        {{ station.label }}
+      </h3>
+
+      <p class="panel-mission">
+        Misión: {{ selectedMission?.name }}
+      </p>
+
+      <span class="planet-status" [class.status-completed]="getSelectedStationStatus() === 'Cumplido'"
+        [class.status-incomplete]="getSelectedStationStatus() === 'Incumplido'"
+        [class.status-pending]="getSelectedStationStatus() === 'Pendiente'"
+        [class.status-partial]="getSelectedStationStatus() === 'Parcial'"
+        [class.status-progress]="getSelectedStationStatus() === 'En progreso'">
+
+        {{ getSelectedStationStatus() }}
+
+      </span>
+
+      <p class="panel-date">
+        {{ formatSelectedStationDate() }}
+      </p>
+
+      <div class="panel-progress">
+
+        <div class="panel-progress-info">
+          <span>Rendimiento del día</span>
+
+          <strong>
+            {{ getSelectedStationProgress() }}%
+          </strong>
+        </div>
+
+        <div class="panel-progress-track">
+          <div class="panel-progress-fill" [style.width.%]="getSelectedStationProgress()">
+          </div>
+        </div>
+
+        <p class="station-habit-count">
+          {{ getSelectedStationCompletedHabits() }}
+          de
+          {{ getSelectedStationTotalHabits() }}
+          hábitos cumplidos
+        </p>
+
+      </div>
+
+    </div>
+
+    }
+
+    <!-- Información del planeta -->
+    @if (selectedDailyPlanet; as planet) {
+
+    <div class="planet-panel">
+
+      <button class="close-panel" (click)="selectedPlanet = null" aria-label="Cerrar información">
+        ×
+      </button>
+
+      <span class="panel-eyebrow">
+        HÁBITO DESCUBIERTO
+      </span>
+
+      <h3>
+        {{ planet.name }}
+      </h3>
+
+      <p class="panel-mission">
+        Misión: {{ selectedMission?.name }}
+      </p>
+
+      <span class="planet-status" [class.status-completed]="getSelectedPlanetStatus() === 'Cumplido'"
+        [class.status-incomplete]="getSelectedPlanetStatus() === 'Incumplido'"
+        [class.status-pending]="getSelectedPlanetStatus() === 'Pendiente'">
+
+        {{ getSelectedPlanetStatus() }}
+
+      </span>
+
+      <p class="panel-date">
+        {{ formatSelectedPlanetDate() }}
+      </p>
+
+      <div class="panel-progress">
+
+        <div class="panel-progress-info">
+          <span>Progreso semanal</span>
+
+          <strong>
+            {{ getSelectedHabitWeeklyProgress() }}%
+          </strong>
+        </div>
+
+        <div class="panel-progress-track">
+          <div class="panel-progress-fill" [style.width.%]="getSelectedHabitWeeklyProgress()">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    }
+
+    }
+
+    <!-- ================================== -->
+    <!-- UNIVERSO MENSUAL -->
+    <!-- ================================== -->
+
+    @if (universeMode === 'monthly') {
+
+    <!-- Ruta orbital en espiral -->
+    <svg class="orbit-paths monthly-orbit-paths" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+
+      <path class="monthly-route-glow" d="M 500 900
+               C 780 900, 900 700, 850 500
+               C 800 280, 600 120, 400 140
+               C 170 160, 80 380, 180 590
+               C 280 800, 560 850, 730 700
+               C 880 560, 820 320, 640 250
+               C 450 180, 250 300, 260 500
+               C 270 690, 480 780, 640 660
+               C 760 570, 700 400, 560 370
+               C 430 340, 350 450, 400 550
+               C 440 630, 550 650, 610 570
+               C 660 500, 610 440, 550 440
+               C 500 440, 470 480, 500 520" />
+
+      <path #monthlyRoute class="monthly-route" d="M 500 930
+C 780 930, 930 760, 930 500
+C 930 220, 720 70, 500 70
+C 220 70, 70 280, 70 500
+C 70 740, 250 880, 470 880
+C 700 880, 830 720, 830 510
+C 830 300, 680 190, 500 190
+C 320 190, 190 320, 190 500
+C 190 680, 320 770, 480 770
+C 640 770, 730 660, 730 520
+C 730 390, 630 300, 510 300
+C 400 300, 320 390, 320 500
+C 320 600, 400 660, 500 660
+C 580 660, 640 600, 640 520
+C 640 450, 590 400, 520 400
+C 470 400, 440 450, 450 500" />
+
+      <!-- Órbitas decorativas -->
+      <ellipse cx="500" cy="500" rx="420" ry="420" class="orbit-decoration monthly-orbit-decoration" />
+
+      <ellipse cx="500" cy="500" rx="250" ry="250" class="orbit-decoration monthly-orbit-decoration" />
+
+    </svg>
+
+    <!-- Doce galaxias del año -->
+    <div class="monthly-galaxies">
+
+      @for (galaxy of galaxies; track galaxy.id) {
+
+      <button type="button" class="monthly-galaxy" [class.galaxy-completed]="galaxy.status === 'completed'"
+        [class.galaxy-current]="galaxy.status === 'current'" [class.galaxy-pending]="galaxy.status === 'pending'"
+        [class.galaxy-incomplete]="galaxy.status === 'incomplete'"
+        [class.galaxy-selected]="selectedGalaxyId === galaxy.id" [style.left.%]="galaxy.x" [style.top.%]="galaxy.y"
+        (click)="selectGalaxy(galaxy.id)"
+        [attr.aria-label]="galaxy.monthName + ', ' + galaxy.progress + '% de progreso'"
+        [attr.aria-pressed]="selectedGalaxyId === galaxy.id">
+
+        <span class="galaxy-orbit"></span>
+
+        <span class="galaxy-body">
+
+          <span class="galaxy-core"></span>
+          <span class="galaxy-arm galaxy-arm-one"></span>
+          <span class="galaxy-arm galaxy-arm-two"></span>
+          <span class="galaxy-arm galaxy-arm-three"></span>
+          <span class="galaxy-stars"></span>
+
+        </span>
+
+        <span class="galaxy-progress">
+          {{ galaxy.progress }}%
+        </span>
+
+        <span class="galaxy-name">
+          {{ galaxy.monthName }}
+        </span>
+
+        @if (galaxy.status === 'completed') {
+        <span class="galaxy-completion-icon">
+          <i class="bi bi-check-circle-fill"></i>
+        </span>
+        }
+
+        @if (galaxy.status === 'current') {
+        <span class="galaxy-current-indicator">
+          MES ACTUAL
+        </span>
+        }
+
+      </button>
+
+      }
+
+    </div>
+
+    <!-- Información de la galaxia seleccionada -->
+    @if (selectedGalaxy; as galaxy) {
+
+    <div class="planet-panel galaxy-panel">
+
+      <button class="close-panel" (click)="selectedGalaxyId = null" aria-label="Cerrar información">
+        ×
+      </button>
+
+      <span class="panel-eyebrow">
+        REGISTRO DE GALAXIA
+      </span>
+
+      <h3>
+        {{ galaxy.monthName }}
+      </h3>
+
+      <p class="panel-mission">
+        {{ galaxy.year }} · Misión: {{ selectedMission?.name }}
+      </p>
+
+      <span class="planet-status" [class.status-completed]="galaxy.status === 'completed'"
+        [class.status-incomplete]="galaxy.status === 'incomplete'" [class.status-pending]="galaxy.status === 'pending'"
+        [class.status-progress]="galaxy.status === 'current'">
+
+        @if (galaxy.status === 'completed') {
+        Mes completado
+        } @else if (galaxy.status === 'current') {
+        Mes en curso
+        } @else if (galaxy.status === 'pending') {
+        Mes pendiente
+        } @else {
+        Mes incompleto
+        }
+
+      </span>
+
+      <div class="panel-progress">
+
+        <div class="panel-progress-info">
+          <span>Progreso mensual</span>
+
+          <strong>
+            {{ galaxy.progress }}%
+          </strong>
+        </div>
+
+        <div class="panel-progress-track">
+          <div class="panel-progress-fill" [style.width.%]="galaxy.progress">
+          </div>
+        </div>
+
+        <p class="station-habit-count">
+          {{ galaxy.completedHabits }}
+          de
+          {{ galaxy.totalHabits }}
+          cumplimientos registrados
+        </p>
+
+      </div>
+
+    </div>
+
+    }
+
+    <!-- Leyenda mensual -->
+    <div class="monthly-legend">
+
+      <span>
+        <i class="legend-dot legend-completed"></i>
+        Completado
+      </span>
+
+      <span>
+        <i class="legend-dot legend-current"></i>
+        Mes actual
+      </span>
+
+      <span>
+        <i class="legend-dot legend-pending"></i>
+        Pendiente
+      </span>
+
+      <span>
+        <i class="legend-dot legend-incomplete"></i>
+        Incompleto
+      </span>
+
+    </div>
+
+    }
+
+    <!-- ================================== -->
+    <!-- NAVE ESPACIAL -->
+    <!-- ================================== -->
+
+    <div class="spaceship route-start" [style.left.%]="shipPosition.x" [style.top.%]="shipPosition.y"
+      [style.transform]="'translate(-50%, -50%) rotate(' + shipRotation + 'deg)'">
+
+      <img class="ship-image" [src]="shipImage" alt="Nave espacial" draggable="false" />
+
+    </div>
+
+    <!-- ================================== -->
+    <!-- DESTINO FINAL -->
+    <!-- ================================== -->
+
+    <div class="destination-star route-end" [class.monthly-destination]="universeMode === 'monthly'"
+      [style.left.%]="destinationPosition.x" [style.top.%]="destinationPosition.y">
+
+      <div class="star-aura"></div>
+
+      <div class="star-core">
+        @if (universeMode === 'monthly') {
+        ✦
+        } @else {
+        ✦
+        }
+      </div>
+
+      <span class="destination-label">
+        {{ selectedMission?.name || 'TU GRAN META' }}
+      </span>
+
+    </div>
+
+    <!-- Mensaje cuando la misión no tiene hábitos -->
+    @if (planets.length === 0) {
+
+    <div class="empty-universe">
+
+      <span>🪐</span>
+
+      <h3>
+        Tu universo está esperando
+      </h3>
+
+      <p>
+        Agrega hábitos a esta misión para comenzar a explorar.
+      </p>
+
+    </div>
+
+    }
+
+    <!-- Identificación del recorrido -->
+    <div class="scene-caption">
+      <span class="caption-dot"></span>
+      EXPLORANDO: {{ selectedMission?.name }}
+    </div>
+
+  </div>
+
+  } @else {
+
+  <!-- Estado sin misiones -->
+  <div class="empty-missions">
+
+    <span class="empty-icon">🚀</span>
+
+    <h2>
+      Aún no tienes misiones
+    </h2>
+
+    <p>
+      Primero crea una misión desde tu dashboard.
+      Después podrás explorarla en tu universo.
+    </p>
+
+  </div>
+
+  }
+
+</section>

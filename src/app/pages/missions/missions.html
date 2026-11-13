@@ -1,0 +1,453 @@
+
+<section class="missions-page">
+
+  <!-- ENCABEZADO -->
+  <div class="page-intro">
+    <div>
+      <span class="section-eyebrow">ORGANIZA TUS OBJETIVOS</span>
+      <h1>Misiones</h1>
+      <p>Explora tus objetivos y descubre cuánto has avanzado en cada uno.</p>
+    </div>
+
+    <div class="intro-decoration">
+      <i class="bi bi-rocket-takeoff"></i>
+    </div>
+  </div>
+
+  <!-- ====================================== -->
+  <!-- LISTADO GENERAL DE MISIONES -->
+  <!-- ====================================== -->
+
+  @if (!selectedMission) {
+
+    <div class="section-heading">
+      <div>
+        <h2>Mi colección de misiones</h2>
+        <p>{{ missions().length }} misiones en tu universo.</p>
+      </div>
+
+      <button
+        type="button"
+        class="create-button"
+        (click)="openMissionForm()">
+        <i class="bi bi-plus-lg"></i>
+        Nueva misión
+      </button>
+    </div>
+
+    @if (missions().length > 0) {
+
+      <div class="missions-grid">
+
+        @for (mission of missions(); track mission.id) {
+
+          <article
+            class="mission-card">
+
+            <div
+              class="mission-color"
+              [style.backgroundColor]="mission.color">
+            </div>
+
+            <div class="mission-content">
+
+              <div class="mission-top">
+
+                <div
+                  class="mission-icon"
+                  [style.backgroundColor]="mission.color">
+                  <i class="bi bi-rocket-takeoff"></i>
+                </div>
+
+                <div class="mission-actions">
+
+                  <button
+                    type="button"
+                    class="mission-action-button edit-button"
+                    title="Editar misión"
+                    aria-label="Editar misión"
+                    (click)="openEditMissionForm(mission)">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="mission-action-button delete-button"
+                    title="Eliminar misión"
+                    aria-label="Eliminar misión"
+                    (click)="deleteMission(mission)">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+
+                </div>
+
+              </div>
+
+              <h3>{{ mission.name }}</h3>
+
+              <p class="mission-description">
+                {{ mission.description || 'Sin descripción' }}
+              </p>
+
+              <div class="mission-footer">
+
+                <span>
+                  <i class="bi bi-stars"></i>
+                  {{ getHabitCount(mission.id) }} / 6 hábitos
+                </span>
+
+                <span>
+                  <i class="bi bi-calendar3"></i>
+                  {{ mission.createdAt | date:'dd/MM/yyyy' }}
+                </span>
+
+              </div>
+
+              <div class="mission-progress">
+
+                <div class="mission-progress-info">
+                  <span>Progreso semanal</span>
+                  <strong>{{ getMissionProgress(mission.id) }}%</strong>
+                </div>
+
+                <div class="mission-progress-track">
+                  <div
+                    class="mission-progress-fill"
+                    [style.width.%]="getMissionProgress(mission.id)"
+                    [style.backgroundColor]="mission.color">
+                  </div>
+                </div>
+
+              </div>
+
+              <button
+                type="button"
+                class="view-mission-button"
+                (click)="selectMission(mission)">
+                Ver detalles
+                <i class="bi bi-arrow-right"></i>
+              </button>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+    } @else {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          <i class="bi bi-rocket"></i>
+        </div>
+
+        <h3>Tu universo está esperando</h3>
+
+        <p>
+          Todavía no tienes misiones. Crea tu primera misión y comienza tu aventura.
+        </p>
+
+        <button
+          type="button"
+          class="empty-create-button"
+          (click)="openMissionForm()">
+          <i class="bi bi-plus-lg"></i>
+          Crear primera misión
+        </button>
+
+      </div>
+
+    }
+
+  }
+
+  <!-- ====================================== -->
+  <!-- DETALLES DE LA MISIÓN SELECCIONADA -->
+  <!-- ====================================== -->
+
+  @if (selectedMission; as mission) {
+
+    <div class="mission-detail">
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="backToMissions()">
+        <i class="bi bi-arrow-left"></i>
+        Volver a misiones
+      </button>
+
+      <!-- INFORMACIÓN PRINCIPAL -->
+
+      <article class="mission-detail-header">
+
+        <div
+          class="detail-color"
+          [style.backgroundColor]="mission.color">
+        </div>
+
+        <div class="detail-header-content">
+
+          <div class="detail-top">
+
+            <div
+              class="detail-icon"
+              [style.backgroundColor]="mission.color">
+              <i class="bi bi-rocket-takeoff"></i>
+            </div>
+
+            <div class="mission-actions">
+
+              <button
+                type="button"
+                class="mission-action-button edit-button"
+                title="Editar misión"
+                aria-label="Editar misión"
+                (click)="openEditMissionForm(mission)">
+                <i class="bi bi-pencil"></i>
+              </button>
+
+              <button
+                type="button"
+                class="mission-action-button delete-button"
+                title="Eliminar misión"
+                aria-label="Eliminar misión"
+                (click)="deleteMission(mission)">
+                <i class="bi bi-trash3"></i>
+              </button>
+
+            </div>
+
+          </div>
+
+          <span class="detail-eyebrow">DETALLES DE LA MISIÓN</span>
+
+          <h2>{{ mission.name }}</h2>
+
+          <p class="detail-description">
+            {{ mission.description || 'Esta misión todavía no tiene descripción.' }}
+          </p>
+
+          <div class="detail-meta">
+            <span>
+              <i class="bi bi-calendar3"></i>
+              Creada el {{ mission.createdAt | date:'dd/MM/yyyy' }}
+            </span>
+
+            <span>
+              <i class="bi bi-stars"></i>
+              {{ getHabitCount(mission.id) }} de 6 hábitos
+            </span>
+          </div>
+
+        </div>
+
+      </article>
+
+      <!-- RESUMEN DE PROGRESO -->
+
+      <div class="detail-summary">
+
+        <article class="detail-summary-card">
+          <div class="summary-icon habits-icon">
+            <i class="bi bi-stars"></i>
+          </div>
+
+          <span>Hábitos registrados</span>
+          <strong>{{ getHabitCount(mission.id) }} / 6</strong>
+        </article>
+
+        <article class="detail-summary-card">
+          <div class="summary-icon progress-icon">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+
+          <span>Progreso semanal</span>
+          <strong>{{ getMissionProgress(mission.id) }}%</strong>
+        </article>
+
+        <article class="detail-summary-card">
+          <div class="summary-icon planet-icon">
+            <i class="bi bi-globe2"></i>
+          </div>
+
+          <span>Planetas activos</span>
+          <strong>{{ getHabitCount(mission.id) }}</strong>
+        </article>
+
+      </div>
+
+      <!-- HÁBITOS DE LA MISIÓN -->
+
+      <div class="detail-section-heading">
+
+        <div>
+          <h2>Planetas de esta misión</h2>
+          <p>Administra tus hábitos y registra tus avances diarios.</p>
+        </div>
+
+        <button
+          type="button"
+          class="create-button"
+          [disabled]="getHabitCount(mission.id) >= 6"
+          (click)="openHabitForm(mission)">
+
+          @if (getHabitCount(mission.id) >= 6) {
+            <i class="bi bi-check-circle"></i>
+            Límite alcanzado
+          } @else {
+            <i class="bi bi-plus-lg"></i>
+            Agregar hábito
+          }
+
+        </button>
+
+      </div>
+
+      @if (getHabitsByMission(mission.id).length > 0) {
+
+        <div class="mission-habits">
+
+          @for (habit of getHabitsByMission(mission.id); track habit.id) {
+
+            <article class="mission-habit">
+
+              <div class="habit-main">
+
+                <div
+                  class="habit-emoji"
+                  [style.backgroundColor]="habit.color">
+                  {{ habit.emoji }}
+                </div>
+
+                <div class="habit-information">
+                  <span class="habit-name">{{ habit.name }}</span>
+                  <small>Planeta de tu misión</small>
+                </div>
+
+                <div class="habit-progress">
+                  <strong>{{ getHabitProgress(habit) }}%</strong>
+                  <span>Esta semana</span>
+                </div>
+
+                <div class="habit-actions">
+
+                  <button
+                    type="button"
+                    class="mission-action-button edit-button"
+                    title="Editar hábito"
+                    aria-label="Editar hábito"
+                    (click)="openEditHabitForm(habit)">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="mission-action-button delete-button"
+                    title="Eliminar hábito"
+                    aria-label="Eliminar hábito"
+                    (click)="deleteHabit(habit)">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+
+                </div>
+
+              </div>
+
+              <div class="habit-week">
+
+                @for (day of getWeekDays(); track day.dateKey) {
+
+                  <button
+                    type="button"
+                    class="week-day"
+                    [class.completed]="isHabitDayCompleted(habit, day.dateKey)"
+                    [class.today]="day.isToday"
+                    [disabled]="day.isFuture"
+                    (click)="toggleHabitDay(habit, day.dateKey)"
+                    [title]="day.label + ' - ' + day.dateKey">
+
+                    <span class="day-label">{{ day.label }}</span>
+
+                    <span class="day-indicator">
+                      @if (isHabitDayCompleted(habit, day.dateKey)) {
+                        <i class="bi bi-check-lg"></i>
+                      }
+                    </span>
+
+                  </button>
+
+                }
+
+              </div>
+
+            </article>
+
+          }
+
+        </div>
+
+      } @else {
+
+        <div class="empty-state habits-empty">
+
+          <div class="empty-icon">
+            <i class="bi bi-stars"></i>
+          </div>
+
+          <h3>Esta misión todavía no tiene planetas</h3>
+
+          <p>
+            Agrega tu primer hábito para comenzar a registrar tu progreso.
+          </p>
+
+          <button
+            type="button"
+            class="empty-create-button"
+            (click)="openHabitForm(mission)">
+            <i class="bi bi-plus-lg"></i>
+            Agregar primer hábito
+          </button>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</section>
+
+<!-- ====================================== -->
+<!-- MODAL DE MISIÓN -->
+<!-- ====================================== -->
+
+@if (showMissionForm) {
+
+  <app-mission-form
+    [mission]="editingMission"
+    (save)="saveMission($event)"
+    (cancel)="closeMissionForm()">
+  </app-mission-form>
+
+}
+
+<!-- ====================================== -->
+<!-- MODAL DE HÁBITO -->
+<!-- ====================================== -->
+
+@if (showHabitForm && selectedMission) {
+
+  <app-habit-form
+    [missions]="[selectedMission]"
+    [existingHabits]="orbitService.getHabitsByMission(selectedMission.id)"
+    [habit]="editingHabit"
+    (save)="saveHabit($event)"
+    (cancel)="closeHabitForm()">
+  </app-habit-form>
+
+}

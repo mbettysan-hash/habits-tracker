@@ -1,0 +1,593 @@
+
+.habits-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// ==========================================
+// ENCABEZADO
+// ==========================================
+
+.page-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+
+  h1 {
+    margin: 7px 0;
+    color: var(--orbita-dark);
+    font-size: 32px;
+    font-weight: 900;
+  }
+
+  p {
+    margin: 0;
+    color: #888;
+    font-size: 14px;
+  }
+}
+
+.section-eyebrow {
+  color: #b39acb;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+}
+
+.intro-decoration {
+  width: 75px;
+  height: 75px;
+  display: grid;
+  place-items: center;
+  border-radius: 25px;
+  background: #f0eafa;
+  color: #9276ae;
+  font-size: 34px;
+  transform: rotate(8deg);
+}
+
+// ==========================================
+// RESUMEN
+// ==========================================
+
+.habits-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 32px;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 19px;
+  background: #fff;
+  border: 1px solid #f0eae4;
+  border-radius: 17px;
+
+  > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  span {
+    color: #888;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  strong {
+    color: var(--orbita-dark);
+    font-size: 23px;
+    font-weight: 900;
+  }
+}
+
+.summary-icon {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 14px;
+  font-size: 20px;
+}
+
+.habits-icon {
+  background: #eef6f0;
+  color: #78a889;
+}
+
+.missions-icon {
+  background: #f0eafa;
+  color: #9276ae;
+}
+
+// ==========================================
+// ENCABEZADO DE SECCIÓN
+// ==========================================
+
+.habits-section-heading {
+  margin-bottom: 18px;
+
+  h2 {
+    margin: 0;
+    color: var(--orbita-dark);
+    font-size: 21px;
+    font-weight: 900;
+  }
+
+  p {
+    margin: 5px 0 0;
+    color: #999;
+    font-size: 12px;
+  }
+}
+
+// ==========================================
+// GRUPOS POR MISIÓN
+// ==========================================
+
+.habits-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.habit-group {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #f0eae4;
+  border-radius: 18px;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 17px 19px;
+  background: #fffdfa;
+  border-bottom: 1px solid #f2eee9;
+}
+
+.group-mission-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 14px;
+  font-size: 19px;
+}
+
+.group-information {
+  flex: 1;
+  min-width: 0;
+
+  h3 {
+    margin: 0;
+    color: var(--orbita-dark);
+    font-size: 14px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+  }
+
+  span {
+    display: block;
+    margin-top: 4px;
+    color: #999;
+    font-size: 10px;
+  }
+}
+
+.add-habit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border: 1px solid #f0eae4;
+  border-radius: 10px;
+  background: #fff;
+  color: #9276ae;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: #f0eafa;
+    border-color: #e2d6f0;
+  }
+
+  &:disabled {
+    background: #f5f3f0;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+}
+
+// ==========================================
+// LISTADO DE HÁBITOS
+// ==========================================
+
+.habits-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.habit-card {
+  padding: 18px 19px;
+  border-bottom: 1px solid #f3efeb;
+  transition: background 0.2s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: #fffdfa;
+  }
+}
+
+.habit-card-main {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.habit-emoji {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 22px;
+  box-shadow: inset 0 0 0 2px #ffffff90;
+}
+
+.habit-information {
+  flex: 1;
+  min-width: 0;
+
+  h4 {
+    margin: 0;
+    color: var(--orbita-dark);
+    font-size: 13px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+  }
+
+  span {
+    display: block;
+    margin-top: 5px;
+    color: #aaa;
+    font-size: 10px;
+  }
+}
+
+// ==========================================
+// PROGRESO DEL HÁBITO
+// ==========================================
+
+.habit-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  flex-shrink: 0;
+
+  strong {
+    color: #9276ae;
+    font-size: 15px;
+    font-weight: 900;
+  }
+
+  span {
+    color: #aaa;
+    font-size: 9px;
+  }
+}
+
+// ==========================================
+// ACCIONES
+// ==========================================
+
+.habit-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.action-button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #f8f6f3;
+  color: #888078;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--orbita-purple);
+    outline-offset: 2px;
+  }
+}
+
+.edit-button:hover {
+  background: #f0eafa;
+  border-color: #e2d6f0;
+  color: #9276ae;
+}
+
+.delete-button:hover {
+  background: #fff0ed;
+  border-color: #ffd8d0;
+  color: #e36e5b;
+}
+
+// ==========================================
+// SEGUIMIENTO SEMANAL
+// ==========================================
+
+.habit-tracker {
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid #f2eee9;
+}
+
+.tracker-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+
+  span:first-child {
+    color: #777;
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  span:last-child {
+    color: #aaa;
+    font-size: 9px;
+  }
+}
+
+.habit-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.week-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 8px 2px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: #faf8f5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: #f2eee9;
+    transform: translateY(-2px);
+  }
+
+  &.today {
+    border-color: var(--orbita-purple);
+    background: #f8f4ff;
+  }
+
+  &.completed {
+    background: #edf8ef;
+    border-color: #c9e8d0;
+
+    .day-indicator {
+      background: var(--orbita-green);
+      color: #276c3c;
+      border-color: var(--orbita-green);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--orbita-purple);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+  }
+}
+
+.day-label {
+  color: #888078;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.day-indicator {
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid #ded8d0;
+  border-radius: 50%;
+  background: #fff;
+  color: transparent;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+// ==========================================
+// ESTADO VACÍO
+// ==========================================
+
+.empty-state {
+  min-height: 260px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #fff;
+  border: 1px dashed #e8ded5;
+  border-radius: 20px;
+
+  h3 {
+    margin: 14px 0 6px;
+    color: var(--orbita-dark);
+    font-size: 17px;
+    font-weight: 900;
+  }
+
+  p {
+    max-width: 420px;
+    margin: 0;
+    color: #999;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+}
+
+.empty-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 19px;
+  background: #f0eafa;
+  color: #9276ae;
+  font-size: 27px;
+}
+
+.go-missions-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 19px;
+  padding: 11px 17px;
+  border-radius: 12px;
+  background: var(--orbita-coral);
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px #ff806b40;
+  }
+}
+
+// ==========================================
+// RESPONSIVE
+// ==========================================
+
+@media (max-width: 800px) {
+  .habit-card-main {
+    flex-wrap: wrap;
+  }
+
+  .habit-information {
+    flex-basis: calc(100% - 65px);
+  }
+
+  .habit-progress {
+    margin-left: 58px;
+    align-items: flex-start;
+  }
+
+  .habit-actions {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-intro h1 {
+    font-size: 25px;
+  }
+
+  .intro-decoration {
+    width: 55px;
+    height: 55px;
+    font-size: 25px;
+  }
+
+  .habits-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .group-header {
+    flex-wrap: wrap;
+  }
+
+  .group-information {
+    flex-basis: calc(100% - 65px);
+  }
+
+  .add-habit-button {
+    width: 100%;
+  }
+
+  .habit-card {
+    padding: 15px 12px;
+  }
+
+  .habit-week {
+    gap: 4px;
+  }
+
+  .week-day {
+    padding: 7px 1px;
+    gap: 6px;
+  }
+
+  .day-label {
+    font-size: 9px;
+  }
+
+  .day-indicator {
+    width: 23px;
+    height: 23px;
+  }
+
+  .tracker-heading {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .action-button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .habit-actions {
+    gap: 5px;
+  }
+}

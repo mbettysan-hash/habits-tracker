@@ -1,0 +1,241 @@
+
+<section class="habits-page">
+
+  <!-- ENCABEZADO -->
+
+  <div class="page-intro">
+    <div>
+      <span class="section-eyebrow">TU CONSTANCIA CONSTRUYE TU UNIVERSO</span>
+      <h1>Mis hábitos</h1>
+      <p>Consulta tus hábitos, organiza tus actividades y registra tus avances diarios.</p>
+    </div>
+
+    <div class="intro-decoration">
+      <i class="bi bi-stars"></i>
+    </div>
+  </div>
+
+  <!-- RESUMEN GENERAL -->
+
+  <div class="habits-summary">
+
+    <article class="summary-card">
+      <div class="summary-icon habits-icon">
+        <i class="bi bi-stars"></i>
+      </div>
+      <div>
+        <span>Hábitos registrados</span>
+        <strong>{{ habits().length }}</strong>
+      </div>
+    </article>
+
+    <article class="summary-card">
+      <div class="summary-icon missions-icon">
+        <i class="bi bi-rocket-takeoff"></i>
+      </div>
+      <div>
+        <span>Misiones activas</span>
+        <strong>{{ missions().length }}</strong>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- LISTADO AGRUPADO POR MISIÓN -->
+
+  <div class="habits-section-heading">
+    <div>
+      <h2>Todos mis hábitos</h2>
+      <p>Organizados según su misión correspondiente.</p>
+    </div>
+  </div>
+
+  @if (habits().length > 0) {
+
+    <div class="habits-groups">
+
+      @for (mission of missions(); track mission.id) {
+
+        @if (getHabitsByMission(mission.id).length > 0) {
+
+          <section class="habit-group">
+
+            <!-- ENCABEZADO DE MISIÓN -->
+
+            <div class="group-header">
+
+              <div
+                class="group-mission-icon"
+                [style.backgroundColor]="mission.color">
+                <i class="bi bi-rocket-takeoff"></i>
+              </div>
+
+              <div class="group-information">
+                <h3>{{ mission.name }}</h3>
+                <span>
+                  {{ getHabitCount(mission.id) }}
+                  {{ getHabitCount(mission.id) === 1 ? 'hábito' : 'hábitos' }}
+                </span>
+              </div>
+
+              <button
+                type="button"
+                class="add-habit-button"
+                [disabled]="getHabitCount(mission.id) >= 6"
+                (click)="openHabitForm(mission)">
+
+                @if (getHabitCount(mission.id) >= 6) {
+                  <i class="bi bi-check-circle"></i>
+                  Límite alcanzado
+                } @else {
+                  <i class="bi bi-plus-lg"></i>
+                  Agregar hábito
+                }
+
+              </button>
+
+            </div>
+
+            <!-- HÁBITOS DE LA MISIÓN -->
+
+            <div class="habits-list">
+
+              @for (habit of getHabitsByMission(mission.id); track habit.id) {
+
+                <article class="habit-card">
+
+                  <div class="habit-card-main">
+
+                    <div
+                      class="habit-emoji"
+                      [style.backgroundColor]="habit.color">
+                      {{ habit.emoji }}
+                    </div>
+
+                    <div class="habit-information">
+                      <h4>{{ habit.name }}</h4>
+                      <span>Creado el {{ habit.createdAt | date:'dd/MM/yyyy' }}</span>
+                    </div>
+
+                    <div class="habit-progress">
+                      <strong>{{ getHabitProgress(habit) }}%</strong>
+                      <span>Progreso semanal</span>
+                    </div>
+
+                    <div class="habit-actions">
+
+                      <button
+                        type="button"
+                        class="action-button edit-button"
+                        title="Editar hábito"
+                        aria-label="Editar hábito"
+                        (click)="openEditHabitForm(habit)">
+                        <i class="bi bi-pencil"></i>
+                      </button>
+
+                      <button
+                        type="button"
+                        class="action-button delete-button"
+                        title="Eliminar hábito"
+                        aria-label="Eliminar hábito"
+                        (click)="deleteHabit(habit)">
+                        <i class="bi bi-trash3"></i>
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                  <!-- SEGUIMIENTO SEMANAL -->
+
+                  <div class="habit-tracker">
+
+                    <div class="tracker-heading">
+                      <span>Seguimiento semanal</span>
+                      <span>Marca los días cumplidos</span>
+                    </div>
+
+                    <div class="habit-week">
+
+                      @for (day of getWeekDays(); track day.dateKey) {
+
+                        <button
+                          type="button"
+                          class="week-day"
+                          [class.completed]="isHabitDayCompleted(habit, day.dateKey)"
+                          [class.today]="day.isToday"
+                          [disabled]="day.isFuture"
+                          (click)="toggleHabitDay(habit, day.dateKey)"
+                          [title]="day.label + ' - ' + day.dateKey">
+
+                          <span class="day-label">{{ day.label }}</span>
+
+                          <span class="day-indicator">
+                            @if (isHabitDayCompleted(habit, day.dateKey)) {
+                              <i class="bi bi-check-lg"></i>
+                            }
+                          </span>
+
+                        </button>
+
+                      }
+
+                    </div>
+
+                  </div>
+
+                </article>
+
+              }
+
+            </div>
+
+          </section>
+
+        }
+
+      }
+
+    </div>
+
+  } @else {
+
+    <!-- ESTADO SIN HÁBITOS -->
+
+    <div class="empty-state">
+
+      <div class="empty-icon">
+        <i class="bi bi-stars"></i>
+      </div>
+
+      <h3>Aún no tienes hábitos registrados</h3>
+
+      <p>
+        Primero crea una misión y después agrega los hábitos que te ayudarán
+        a cumplirla.
+      </p>
+
+      <a routerLink="/misiones" class="go-missions-button">
+        <i class="bi bi-rocket-takeoff"></i>
+        Ir a misiones
+      </a>
+
+    </div>
+
+  }
+
+</section>
+
+<!-- MODAL DE CREACIÓN Y EDICIÓN -->
+
+@if (showHabitForm && selectedMission) {
+
+  <app-habit-form
+    [missions]="[selectedMission]"
+    [existingHabits]="getHabitsByMission(selectedMission.id)"
+    [habit]="editingHabit"
+    (save)="saveHabit($event)"
+    (cancel)="closeHabitForm()">
+  </app-habit-form>
+
+}
